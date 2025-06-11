@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>GitHub Actions Build Dashboard</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f6f9;
+      color: #333;
+    }
+
+    header {
+      background-color: #343a40;
+      color: white;
+      padding: 20px 0;
+      text-align: center;
+      font-size: 1.8em;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    }
+
+    .dashboard {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 30px;
+      padding: 30px;
+    }
+
+    .chart-box {
+      background-color: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      padding: 20px;
+    }
+
+    canvas {
+      width: 100% !important;
+      height: auto !important;
+    }
+
+    footer {
+      text-align: center;
+      font-size: 0.9em;
+      color: #777;
+      padding: 15px;
+    }
+  </style>
+</head>
+<body>
+  <header>📊 GitHub Actions Build Monitor Dashboard</header>
+
+  <div class="dashboard">
+    <div class="chart-box">
+      <h3> Build Durations</h3>
+      <canvas id="buildChart"></canvas>
+    </div>
+    <div class="chart-box">
+      <h3>Status Distribution</h3>
+      <canvas id="statusChart"></canvas>
+    </div>
+    <div class="chart-box">
+      <h3>Duration Trend Over Time</h3>
+      <canvas id="durationTrendChart"></canvas>
+    </div>
+  </div>
+
+  <footer><b>Auto-refreshing every 2 minutes</b></footer>
+
+  <script>
+    setTimeout(() => location.reload(), 	120000); // Refresh every 60 seconds
+
+    const builds = {{ builds|tojson }};
+    const labels = builds.map(b => `#${b.build_id}`);
+    const durations = builds.map(b => b.duration);
+    const colors = builds.map(b => b.status === 'success' ? 'green' : 'red');
+    const timeLabels = builds.map(b => new Date(b.timestamp).toLocaleString());
+
+    // Bar Chart
+    new Chart(document.getElementById("buildChart"), {
+      type: 'bar',
+      data: {
+        labels: labels,
+        datasets: [{
+          label: 'Duration (minutes)',
+          data: durations,
+          backgroundColor: colors
+        }]
+      },
+      options: {
+        responsive: true
+      }
+    });
+
+    // Pie Chart
+    const statusCounts = builds.reduce((acc, b) => {
+      acc[b.status] = (acc[b.status] || 0) + 1;
+      return acc;
+    }, {});
+
+    new Chart(document.getElementById("statusChart"), {
+      type: 'pie',
+      data: {
+        labels: Object.keys(statusCounts),
+        datasets: [{
+          data: Object.values(statusCounts),
+          backgroundColor: ['green', 'red']
+        }]
+      },
+      options: {
+        responsive: true
+      }
+    });
+
+    // Line Chart
+    new Chart(document.getElementById("durationTrendChart"), {
+      type: 'line',
+      data: {
+        labels: timeLabels,
+        datasets: [{
+          label: 'Duration (minutes)',
+          data: durations,
+          borderColor: 'blue',
+          fill: false,
+          tension: 0.4
+        }]
+      },
+      options: {
+        responsive: true
+      }
+    });
+  </script>
+</body>
+</html>
