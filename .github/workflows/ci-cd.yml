@@ -1,19 +1,12 @@
 
-name: CI
-
-on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
-
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-    - name: Run a simple script
-      run: echo "🎉 CI/CD pipeline triggered successfully!"
+      - name: Run a fake command
+        run: |
+          echo "This will fail"
+          exit 1  # force fail
