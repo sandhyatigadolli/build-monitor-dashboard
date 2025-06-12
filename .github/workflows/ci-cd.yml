@@ -1,12 +1,6 @@
-
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Run a fake command
+      - name: Simulate long process
         run: |
-          echo "This will fail"
-          exit 1  # force fail
+          echo "Simulating..."
+          sleep 180  # 3 minutes delay
+
+
