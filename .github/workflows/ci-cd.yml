@@ -1,6 +1,14 @@
-      - name: Simulate long process
-        run: |
-          echo "Simulating..."
-          sleep 180  # 3 minutes delay
+    name: Build Monitor Test
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Say Hello
+        run: echo "This is a test build"
 
 
