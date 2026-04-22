@@ -1,32 +1,32 @@
-# 🚀 GitHub Build Monitor Dashboard
+#  GitHub Build Monitor Dashboard
 
 A full-stack CI/CD monitoring dashboard that tracks real-time GitHub Actions workflow runs.
 
-## 🔧 Tech Stack
+##  Tech Stack
 
 * Frontend: React + Material UI
 * Backend: Spring Boot
 * API: GitHub REST API
 * Data Format: JSON
 
-## ✨ Features
+##  Features
 
-* 📊 Real-time build monitoring
-* 📈 Build status visualization (Success / Failed / In Progress)
-* 🔄 Auto-refresh every 60 seconds
-* 🌙 Dark Mode support
-* 📂 Clean dashboard UI with sidebar navigation
+*  Real-time build monitoring
+*  Build status visualization (Success / Failed / In Progress)
+*  Auto-refresh every 60 seconds
+*  Dark Mode support
+*  Clean dashboard UI with sidebar navigation
 
-## 🔐 Security
+##  Security
 
 * Uses environment variables for GitHub token
 * No secrets stored in code
 
-## 📸 Screenshots
+##  Screenshots
 
 (Add your screenshots here)
 
-## ▶️ How to Run
+##  How to Run
 
 ### Backend
 
@@ -43,7 +43,7 @@ npm install
 npm start
 ```
 
-## 📌 Future Improvements
+##  Future Improvements
 
 * Add build logs view
 * Add notifications for failed builds
