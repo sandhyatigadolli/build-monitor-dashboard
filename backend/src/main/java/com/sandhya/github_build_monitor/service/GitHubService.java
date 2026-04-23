@@ -34,7 +34,6 @@ public class GitHubService {
 	    RestTemplate restTemplate = new RestTemplate();
 
 	  
-
 	    String token = System.getenv("GITHUB_TOKEN");
 
 	    if (token == null || token.isEmpty()) {
